@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   post 'polls/update' => 'polls#update'
   get 'polls/show/:alpha_numeric_id/results' => 'polls#results'
   post 'polls/resultspage' => 'polls#resultspage'
+  get '/google' => 'polls#google'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
