@@ -1,3 +1,6 @@
+require "uri"
+require "net/http"
+
 class PollsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
@@ -40,12 +43,29 @@ class PollsController < ApplicationController
                                   :poll => poll }
   end
   
+  def resultspage
+    # @client = GooglePlaces::Client.new(ENV['GOOGLE_PLACES_API_KEY'])
+    # result = @client.spots_by_query(params[:query])
+    # render json: result.as_json
+
+    url = URI(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{params[:query]}&minprice=#{params[:minprice]}&maxprice=#{params[:maxprice]}key=#{ENV['GOOGLE_PLACES_API_KEY']}`)
+
+    https = Net::HTTP.new(url.host, url.port)
+    https.use_ssl = true
+    
+    request = Net::HTTP::Get.new(url)
+    
+    response = https.request(request)
+    puts response.read_body
+    render json: response.read_body.as_json
+  end
+
   private
 
   # def vote_params
   #   params.permit(:place_id, :name, :alpha_numeric_id)
   # end
-  
+
   def poll
     @poll ||= Poll.where(alpha_numeric_id: params[:alpha_numeric_id])
   end

@@ -29,6 +29,8 @@ gem 'puma'
 
 gem 'rack-cors'
 
+gem 'google_places'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
