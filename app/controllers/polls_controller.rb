@@ -47,7 +47,7 @@ class PollsController < ApplicationController
     # @client = GooglePlaces::Client.new(ENV['GOOGLE_PLACES_API_KEY'])
     # result = @client.spots_by_query(params[:query])
     # render json: result.as_json
-
+    puts "inside resultspage"
     url = URI(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{params[:query]}&minprice=#{params[:minprice]}&maxprice=#{params[:maxprice]}key=#{ENV['GOOGLE_PLACES_API_KEY']}`)
 
     https = Net::HTTP.new(url.host, url.port)
