@@ -64,7 +64,7 @@ create database eatsypeasy;
 \c eatsypeasy
 \dt
 ```
-For the back-end, migrate the tables and schema:
+For the back-end, migrate the tables, and schema:
 ```
 bin/rake db:reset
 bin/rake db:migrate
