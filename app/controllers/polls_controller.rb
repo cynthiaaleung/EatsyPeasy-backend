@@ -55,12 +55,16 @@ class PollsController < ApplicationController
     # render json: result.as_json
     puts "inside resultspage"
     puts params
-    puts URI.encode(params[:query])
-    puts `https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{URI.encode(params[:query])}#{URI.encode("&")}minprice=#{URI.encode(params[:minprice].to_s)}#{URI.encode("&")}maxprice=#{URI.encode(params[:maxprice].to_s)}#{URI.encode("&")}key=#{ENV['GOOGLE_PLACES_API_KEY']}`
+    # puts URI.encode(params[:query])
+    # puts `https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{URI.encode(params[:query])}#{URI.encode("&")}minprice=#{URI.encode(params[:minprice].to_s)}#{URI.encode("&")}maxprice=#{URI.encode(params[:maxprice].to_s)}#{URI.encode("&")}key=#{ENV['GOOGLE_PLACES_API_KEY']}`
     #URI.encode_www_form("q" => "ruby", "lang" => "en")
     #=> "q=ruby&lang=en"
-    puts URI.encode_www_form(params)
-    url = `https://maps.googleapis.com/maps/api/place/textsearch/json?#{URI.encode_www_form(params)}&key=#{ENV['GOOGLE_PLACES_API_KEY']}`
+    puts URI.encode_www_form("query" => params[:query], "minprice" => params[:minprice], "maxprice" => params[:maxprice], "key" => ENV['GOOGLE_PLACES_API_KEY'])
+
+    url = URI.parse('https://maps.googleapis.com/maps/api/place/textsearch/json')
+    url.query=URI.encode_www_form("query" => params[:query], "minprice" => params[:minprice], "maxprice" => params[:maxprice], "key" => ENV['GOOGLE_PLACES_API_KEY'])
+
+    # url = `https://maps.googleapis.com/maps/api/place/textsearch/json?#{URI.encode_www_form(params)}&key=#{ENV['GOOGLE_PLACES_API_KEY']}`
     #url = URI(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{URI.encode(params[:query])}#{URI.encode("&")}minprice=#{URI.encode(params[:minprice].to_s)}#{URI.encode("&")}maxprice=#{URI.encode(params[:maxprice].to_s)}#{URI.encode("&")}key=#{ENV['GOOGLE_PLACES_API_KEY']}`)
     puts url
 
