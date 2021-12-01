@@ -9,7 +9,6 @@ A single page application to help you and your friends choose where to eat! Answ
 * React DOM 17.0.2
 * React Router
 * Google Places API
-* [thingproxy](https://github.com/Freeboard/thingproxy) - for quick, initial Google API testing
 * Axios
 * Chart.js
 * Clipboard.js
@@ -18,8 +17,8 @@ A single page application to help you and your friends choose where to eat! Answ
 ## Full Application Development (self-hosted)
 
 Default port settings:
-⋅⋅* Front-end: `http://localhost:3001`
-⋅⋅* Back-end: `http://localhost:3000`
+* Front-end: `http://localhost:3001`
+* Back-end: `http://localhost:3000`
 
 ### Pre-Installation
 Before working on EatsyPeasy locally, you must get an [API key from Google Places API.](https://developers.google.com/maps/documentation/places/web-service/get-api-key)
@@ -64,7 +63,7 @@ create database eatsypeasy;
 \c eatsypeasy
 \dt
 ```
-For the back-end, migrate the tables and schema:
+For the back-end, migrate the tables, and schema:
 ```
 bin/rake db:reset
 bin/rake db:migrate
