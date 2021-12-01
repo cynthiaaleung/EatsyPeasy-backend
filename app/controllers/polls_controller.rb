@@ -56,8 +56,9 @@ class PollsController < ApplicationController
     puts "inside resultspage"
     puts params
     puts URI.encode(params[:query])
-    puts `https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{URI.encode(params[:query])}&minprice=#{URI.encode(params[:minprice].to_s)}&maxprice=#{URI.encode(params[:maxprice].to_s)}&key=#{ENV['GOOGLE_PLACES_API_KEY']}`
-    url = URI(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{URI.encode(params[:query])}&minprice=#{URI.encode(params[:minprice].to_s)}&maxprice=#{URI.encode(params[:maxprice].to_s)}&key=#{ENV['GOOGLE_PLACES_API_KEY']}`)
+    puts `https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{URI.encode(params[:query])}#{URI.encode("&")}minprice=#{URI.encode(params[:minprice].to_s)}#{URI.encode("&")}maxprice=#{URI.encode(params[:maxprice].to_s)}#{URI.encode("&")}key=#{ENV['GOOGLE_PLACES_API_KEY']}`
+    
+    url = URI(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{URI.encode(params[:query])}#{URI.encode("&")}minprice=#{URI.encode(params[:minprice].to_s)}#{URI.encode("&")}maxprice=#{URI.encode(params[:maxprice].to_s)}#{URI.encode("&")}key=#{ENV['GOOGLE_PLACES_API_KEY']}`)
     puts url
 
 
