@@ -54,7 +54,7 @@ class PollsController < ApplicationController
     # result = @client.spots_by_query(params[:query])
     # render json: result.as_json
     puts "inside resultspage"
-    url = URI(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{params[:query]}&minprice=#{params[:minprice]}&maxprice=#{params[:maxprice]}key=#{ENV['GOOGLE_PLACES_API_KEY']}`)
+    url = URI(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{URI.encode(params[:query])}&minprice=#{params[:minprice]}&maxprice=#{params[:maxprice]}key=#{ENV['GOOGLE_PLACES_API_KEY']}`)
     puts params
     puts url
 
