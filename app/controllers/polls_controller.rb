@@ -55,14 +55,20 @@ class PollsController < ApplicationController
     # render json: result.as_json
     puts "inside resultspage"
     url = URI(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{params[:query]}&minprice=#{params[:minprice]}&maxprice=#{params[:maxprice]}key=#{ENV['GOOGLE_PLACES_API_KEY']}`)
+    puts params
+    puts url
+
 
     https = Net::HTTP.new(url.host, url.port)
     https.use_ssl = true
     
     request = Net::HTTP::Get.new(url)
-    
+    puts request
+
     response = https.request(request)
+    puts response
     puts response.read_body
+    puts "end of resultspage"
     render json: response.read_body.as_json
   end
 
