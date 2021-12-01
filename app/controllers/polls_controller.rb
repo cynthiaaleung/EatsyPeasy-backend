@@ -30,15 +30,11 @@ class PollsController < ApplicationController
 
   def update
     @poll = Poll.find_by(alpha_numeric_id: params[:alpha_numeric_id])
-    # if poll
-      #knowing which one was voted for, need to update corresponding vote count by 1
-      restVote = params[:vote] #restaurant_{number}_votes
-      @poll.increment!(restVote.to_sym,1)
-      user = User.create(name: params[:name], poll_id: poll[:id], restaurant_choice: params[:vote])
-      render json: @poll
-      # else
-    #   render json: poll.errors
-    # end
+    #knowing which one was voted for, need to update corresponding vote count by 1
+    restVote = params[:vote] #restaurant_{number}_votes
+    @poll.increment!(restVote.to_sym,1)
+    user = User.create(name: params[:name], poll_id: poll[:id], restaurant_choice: params[:vote])
+    render json: @poll
   end
 
   def results
@@ -50,63 +46,30 @@ class PollsController < ApplicationController
   end
   
   def resultspage
-    # @client = GooglePlaces::Client.new(ENV['GOOGLE_PLACES_API_KEY'])
-    # result = @client.spots_by_query(params[:query])
-    # render json: result.as_json
-    puts "inside resultspage"
-    puts params
-    # puts URI.encode(params[:query])
-    # puts `https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{URI.encode(params[:query])}#{URI.encode("&")}minprice=#{URI.encode(params[:minprice].to_s)}#{URI.encode("&")}maxprice=#{URI.encode(params[:maxprice].to_s)}#{URI.encode("&")}key=#{ENV['GOOGLE_PLACES_API_KEY']}`
-    #URI.encode_www_form("q" => "ruby", "lang" => "en")
-    #=> "q=ruby&lang=en"
-    puts URI.encode_www_form("query" => params[:query], "minprice" => params[:minprice], "maxprice" => params[:maxprice], "key" => ENV['GOOGLE_PLACES_API_KEY'])
-
     url = URI.parse('https://maps.googleapis.com/maps/api/place/textsearch/json')
     url.query=URI.encode_www_form("query" => params[:query], "minprice" => params[:minprice], "maxprice" => params[:maxprice], "key" => ENV['GOOGLE_PLACES_API_KEY'])
-
-    # url = `https://maps.googleapis.com/maps/api/place/textsearch/json?#{URI.encode_www_form(params)}&key=#{ENV['GOOGLE_PLACES_API_KEY']}`
-    #url = URI(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{URI.encode(params[:query])}#{URI.encode("&")}minprice=#{URI.encode(params[:minprice].to_s)}#{URI.encode("&")}maxprice=#{URI.encode(params[:maxprice].to_s)}#{URI.encode("&")}key=#{ENV['GOOGLE_PLACES_API_KEY']}`)
-    puts url
-
 
     https = Net::HTTP.new(url.host, url.port)
     https.use_ssl = true
     
     request = Net::HTTP::Get.new(url)
-    puts request
-
     response = https.request(request)
-    puts response
-    puts response.read_body
-    puts "end of resultspage"
     render json: response.read_body.as_json
   end
 
   def resultsdetails
-    puts "inside resultsdetails"
-    puts params
     url = URI.parse('https://maps.googleapis.com/maps/api/place/details/json?')
     url.query=URI.encode_www_form("place_id" => params[:place_id], "key" => ENV['GOOGLE_PLACES_API_KEY'])
-    puts url
-    
+
     https = Net::HTTP.new(url.host, url.port)
     https.use_ssl = true
     
     request = Net::HTTP::Get.new(url)
-    puts request
-
     response = https.request(request)
-    puts response
-    puts response.read_body
-    puts "end of resultsdetailspage"
     render json: response.read_body.as_json
   end
 
   private
-
-  # def vote_params
-  #   params.permit(:place_id, :name, :alpha_numeric_id)
-  # end
 
   def poll
     @poll ||= Poll.where(alpha_numeric_id: params[:alpha_numeric_id])
