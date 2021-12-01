@@ -59,7 +59,7 @@ class PollsController < ApplicationController
     puts `https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{URI.encode(params[:query])}#{URI.encode("&")}minprice=#{URI.encode(params[:minprice].to_s)}#{URI.encode("&")}maxprice=#{URI.encode(params[:maxprice].to_s)}#{URI.encode("&")}key=#{ENV['GOOGLE_PLACES_API_KEY']}`
     #URI.encode_www_form("q" => "ruby", "lang" => "en")
     #=> "q=ruby&lang=en"
-    puts "URI.encode_www_form(params):" URI.encode_www_form(params)
+    puts URI.encode_www_form(params)
     url = `https://maps.googleapis.com/maps/api/place/textsearch/json?#{URI.encode_www_form(params)}&key=#{ENV['GOOGLE_PLACES_API_KEY']}`
     #url = URI(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=#{URI.encode(params[:query])}#{URI.encode("&")}minprice=#{URI.encode(params[:minprice].to_s)}#{URI.encode("&")}maxprice=#{URI.encode(params[:maxprice].to_s)}#{URI.encode("&")}key=#{ENV['GOOGLE_PLACES_API_KEY']}`)
     puts url
