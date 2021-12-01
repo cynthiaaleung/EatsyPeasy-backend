@@ -82,6 +82,26 @@ class PollsController < ApplicationController
     render json: response.read_body.as_json
   end
 
+  def resultsdetails
+    puts "inside resultsdetails"
+    puts params
+    url = URI.parse('https://maps.googleapis.com/maps/api/place/details/json?')
+    url.query=URI.encode_www_form("place_id" => params[:place_id], "key" => ENV['GOOGLE_PLACES_API_KEY'])
+    puts url
+    
+    https = Net::HTTP.new(url.host, url.port)
+    https.use_ssl = true
+    
+    request = Net::HTTP::Get.new(url)
+    puts request
+
+    response = https.request(request)
+    puts response
+    puts response.read_body
+    puts "end of resultsdetailspage"
+    render json: response.read_body.as_json
+  end
+
   private
 
   # def vote_params
