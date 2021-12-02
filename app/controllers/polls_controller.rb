@@ -4,12 +4,6 @@ require "net/http"
 class PollsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  def google
-    @client = GooglePlaces::Client.new(ENV['GOOGLE_PLACES_API_KEY'])
-    result = @client.spots(43.6532, -79.3832, :types => ["restaurant"])
-    render json: result.as_json
-  end
-
   def index
     @polls = Poll.all
     render json: @polls
